@@ -10,14 +10,6 @@
   (libraries batteries yojson mlmpfr))
 
 (executable
-  (name frodo)
-  (public_name frodo-calculator)
-  (promote (until-clean))
-  (modules frodo)
-  (flags -open Batteries)
-  (libraries batteries mlmpfr yojson core))
-
-(executable
   (name kyber)
   (public_name kyber-calculator)
   (promote (until-clean))
