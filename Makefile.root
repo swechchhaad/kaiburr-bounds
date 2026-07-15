@@ -1,0 +1,25 @@
+# -*- Makefile -*-
+
+# --------------------------------------------------------------------
+TMP  := .tmp
+RDIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+NAME := ecbounds
+GTAR ?= tar
+
+# --------------------------------------------------------------------
+.PHONY: default examples clean
+
+default:
+	rm -rf $(TMP) && mkdir -p $(TMP)/$(NAME)
+	scripts/distribution $(TMP)/$(NAME) MANIFEST
+	$(GTAR) -C $(TMP) -czf $(NAME).tar.gz --owner=0 --group=0 $(NAME)
+
+examples:
+	git -C .. archive -o $(RDIR)/examples.tar.gz --prefix=examples/ HEAD \
+	  ':/proof' \
+	  ':/bound-calculator' \
+	  ':!/bound-calculator/results' \
+	  ':!**/.git*'
+
+clean:
+	rm -rf $(TMP)

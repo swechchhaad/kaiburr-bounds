@@ -1,0 +1,9 @@
+lib: [
+  "_build/install/default/lib/bound-calculator/META"
+  "_build/install/default/lib/bound-calculator/dune-package"
+  "_build/install/default/lib/bound-calculator/opam"
+]
+bin: [
+  "_build/install/default/bin/frodo-calculator"
+  "_build/install/default/bin/kyber-calculator"
+]
