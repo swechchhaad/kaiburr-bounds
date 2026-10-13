@@ -1,0 +1,29 @@
+# syntax = devthefuture/dockerfile-x
+
+FROM ./Dockerfile.build
+
+COPY --chmod=0755 --chown=1001:0 examples.tar.gz examples.tar.gz
+
+RUN \
+        tar -xof examples.tar.gz
+
+RUN \
+	opam pin add -n --confirm-level=unsafe-yes \
+	  easycrypt https://github.com/EasyCrypt/easycrypt.git#r2025.02
+
+RUN \
+	opam pin add -n --confirm-level=unsafe-yes \
+	  examples/bound-calculator
+
+RUN \
+    sudo apt-get install -q -y libmpfr-dev libpcre3-dev
+
+RUN \
+	opam install --confirm-level=unsafe-yes easycrypt bound-calculator
+
+RUN \
+	opam exec -- easycrypt why3config
+
+RUN \
+	sudo apt-get -q -y install jq && \
+	sudo apt-get -q -y clean

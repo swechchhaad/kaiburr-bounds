@@ -1,0 +1,8 @@
+(lang dune 3.6)
+(name bound-calculator)
+
+(generate_opam_files true)
+
+(package
+ (name bound-calculator)
+ (depends batteries (mlmpfr (>= 4.2.1)) yojson))

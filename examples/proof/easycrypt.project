@@ -1,0 +1,7 @@
+[general]
+timeout = 30
+rdirs = eclib
+
+provers = Alt-Ergo@2.4
+provers = CVC4@1.8
+provers = Z3@4.8
