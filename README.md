@@ -29,6 +29,12 @@ For each parameter set, `Kaiburr<n>Corr.kaiburr_correctness` states that for eve
 (lossless, otherwise unbounded) adversary that receives the secret key and chooses the
 message, the probability that decryption fails is at most `epsilon_corr` ($\delta$ above). This is the notion of correctness used in the Fujisaki–Okamoto bound. There is no MLWE term and no heuristic assumption on the distribution of ciphertexts.
 
+### Formally-verified bounds for Warmup
+
+For the warmup experiment of the paper (Table 1), the same statement is proved for
+ML-KEM with its original noise $\mathrm{CBD}_2$ and ciphertext compression removed,
+varying only the module rank $k$. These instances use `mlkem/MLKEM_CBD_Correctness.ec`, a copy of `MLKEM_Correctness.ec` in which the definition of the noise (`dshort_elem = dmap (dcbd 2) incoeff`) and the proof that it is good are restored to the original [BKL+25] code.
+
 ## Quick start
 
 With the toolchain installed (see [Setup](#one-time-setup)):
@@ -157,11 +163,15 @@ examples/proof/
   mlkem/Kaiburr_1792_Correctness.ec   parameter set k = 7,  t = 4
   mlkem/Kaiburr_4608_Correctness.ec   parameter set k = 18, t = 6
   mlkem/Kaiburr_6144_Correctness.ec   parameter set k = 24, t = 8
+  mlkem/MLKEM_CBD_Correctness.ec      as MLKEM_Correctness.ec, but with the original CBD_2 noise
+  mlkem/Warmup_k<k>_Correctness.ec    warmup instances k = 3, ..., 8, CBD_2, no compression
 examples/bound-calculator/
   distr.ml                            distribution library        (unchanged)
-  kyber.ml                            Kaiburr bound calculator
+  kyber.ml                            Kaiburr and warmup bound calculator
 ```
 
 The Docker files, `Makefile.root`, `MANIFEST`, `scripts/distribution`,
 `scripts/install-sh` and `examples.tar.gz` are inherited from the original paper and are not used
-directly for our paper. We keep them for reference.
+directly for our paper. We keep them for reference. The CBD_2 blocks in
+`MLKEM_CBD_Correctness.ec` are taken verbatim from `examples/proof/mlkem/MLKEM_Correctness.ec`
+in `examples.tar.gz`.

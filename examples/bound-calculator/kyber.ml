@@ -42,6 +42,17 @@ let kaiburr4608 = { name = "kaiburr-4608"; k = 18; b = noise_f 6; }
 let kaiburr6144 = { name = "kaiburr-6144"; k = 24; b = noise_f 8; }
 
 (* ------------------------------------------------------------------------ *)
+let cbd2 : distr = mksymrat ~zero:6 ~onward:[4; 1]
+
+(* ------------------------------------------------------------------------ *)
+let warmup3 = { name = "warmup-k3"; k = 3; b = cbd2; }
+let warmup4 = { name = "warmup-k4"; k = 4; b = cbd2; }
+let warmup5 = { name = "warmup-k5"; k = 5; b = cbd2; }
+let warmup6 = { name = "warmup-k6"; k = 6; b = cbd2; }
+let warmup7 = { name = "warmup-k7"; k = 7; b = cbd2; }
+let warmup8 = { name = "warmup-k8"; k = 8; b = cbd2; }
+
+(* ------------------------------------------------------------------------ *)
 module type MP = sig
   val p : params
 end
@@ -109,7 +120,13 @@ let () =
   let params : (module MP) list = [
     (module struct let p = kaiburr1792 end : MP);
     (module struct let p = kaiburr4608 end : MP);
-    (module struct let p = kaiburr6144 end : MP)] in
+    (module struct let p = kaiburr6144 end : MP);
+    (module struct let p = warmup3 end : MP);
+    (module struct let p = warmup4 end : MP);
+    (module struct let p = warmup5 end : MP);
+    (module struct let p = warmup6 end : MP);
+    (module struct let p = warmup7 end : MP);
+    (module struct let p = warmup8 end : MP)] in
 
   List.iter (fun (module MP : MP) ->
     (* Instantiating the module starts all the computations *)
